@@ -27,13 +27,13 @@
 <body>
 <div class="score-display">
     <h1>Hydration gamification</h1>
-    <p id="score">score: 0</p>
-    <p id="title">title: </p>
+    <p id="score">Score: 0</p>
+    <p id="title">Title: </p>
+    <p id="feedback">Feeback: </p>
 
     <div id="scorecard" style="display: none;" class="status-neutral">
         <p>Score: {score}</p>
     </div>
-
     <!-- Add Button to Add Buttons -->
     <button id="subButton">Coffee +</button>
     <button id="teaBtn">Tea +</button>
@@ -78,6 +78,15 @@
         document.getElementById("score").innerHTML = "score: " + d.score;
         document.getElementById("title").innerHTML = "Status " + d.status;
         document.getElementById("levelprogress").value = d.levelprogress;
+        if(d.score >= 1000){
+            document.getElementById("feedback").innerHTML = "Feedback: Good job!";
+        } else if(d.score >= 500) {
+            document.getElementById("feedback").innerHTML = "Feedback: Keep going!";
+        } else if (d.score < 0){
+            document.getElementById("feedback").innerHTML = "Feedback: Try again!";
+        } else {
+            document.getElementById("feedback").innerHTML = "Feedback: U got this!";
+        }
     }
 
     // Initial score update

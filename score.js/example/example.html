@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score.js example</title>
+
+    <!-- Include score.js -->
+    <script src="../lib/score.js"></script>
+
+    <style>
+        .score-display {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .status-neutral {
+            color: orange;
+        }
+
+        input[type="range"] {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+<div class="score-display">
+    <h1>Hydration gamification</h1>
+    <p id="score">score: 0</p>
+    <p id="title">title: </p>
+
+    <div id="scorecard" style="display: none;" class="status-neutral">
+        <p>Score: {score}</p>
+    </div>
+
+    <!-- Add Button to Add Buttons -->
+    <button id="subButton">Coffee +</button>
+    <button id="addButton">Water +</button>
+    <br>
+    <progress id="levelprogress" max="100" value="{levelprogress}"></progress>
+    <br>
+    <button id="resetBtn">reset</button>
+    <br>
+</div>
+
+
+<script>
+    // Initialize score object
+    var score = new Score();
+
+    // Get elements
+    var scorecard = document.getElementById("scorecard");
+    var template = scorecard.innerHTML;
+
+
+    // Function to update the score
+    function updateScore(value) {
+        score.set(value);
+        updateCard();
+    }
+
+    // Function to update the score card
+    function updateCard() {
+        var s = template;
+
+        // Get the scorecard details
+        var d = score.scorecard();
+
+        // Populate the template with the current data
+        for (var p in d) {
+            s = s.replace(new RegExp('{' + p + '}', 'g'), d[p]);
+        }
+
+        scorecard.innerHTML = s;
+        scorecard.className = d.status;
+        document.getElementById("score").innerHTML = "score: " + d.score;
+        document.getElementById("title").innerHTML = "Status " + d.status;
+        document.getElementById("levelprogress").value = d.levelprogress;
+    }
+
+    // Initial score update
+    updateCard();
+
+    // Add Button to Add Buttons
+    const addButton = document.getElementById('addButton');
+
+    // Event listener to add new buttons
+    addButton.addEventListener('click', function () {
+        score.increment(20);
+        updateCard();
+    });
+
+    subButton.addEventListener('click', function () {
+        score.decrement(100);
+        updateCard();
+    });
+
+    resetBtn.addEventListener('click', function () {
+        score.set(0);
+        updateCard();
+    });
+</script>
+</body>
+</html>

@@ -36,6 +36,7 @@
 
     <!-- Add Button to Add Buttons -->
     <button id="subButton">Coffee +</button>
+    <button id="teaBtn">Tea +</button>
     <button id="addButton">Water +</button>
     <br>
     <progress id="levelprogress" max="100" value="{levelprogress}"></progress>
@@ -91,6 +92,11 @@
         updateCard();
     });
 
+    teaBtn.addEventListener('click', function () {
+        score.decrement(40);
+        updateCard();
+    });
+
     subButton.addEventListener('click', function () {
         score.decrement(100);
         updateCard();
@@ -100,6 +106,8 @@
         score.set(0);
         updateCard();
     });
+
+    console.log(score.scorecard());
 </script>
 </body>
 </html>
